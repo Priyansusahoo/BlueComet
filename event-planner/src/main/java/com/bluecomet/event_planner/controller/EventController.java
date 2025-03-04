@@ -152,7 +152,7 @@ public class EventController {
         return ResponseEntity.ok(cancelledEventResponse);
     }
 
-    @GetMapping("/between")
+    @PostMapping("/between")
     @Operation(
             summary = "Get events within a date range",
             description = "Retrieve a list of events that fall within the specified date range"
@@ -166,7 +166,7 @@ public class EventController {
             @ApiResponse(responseCode = "400", description = "Invalid date range format"),
             @ApiResponse(responseCode = "204", description = "No events found")
     })
-    public ResponseEntity<List<EventResponse>> getEventsBetweenDates(@Valid @RequestParam EventDateRangeRequest request)
+    public ResponseEntity<List<EventResponse>> getEventsBetweenDates(@Valid @RequestBody EventDateRangeRequest request)
     {
         log.info("API Call: GET /api/v1/events/between - Fetching events from {} to {}", request.start(), request.end());
         request.validate();
