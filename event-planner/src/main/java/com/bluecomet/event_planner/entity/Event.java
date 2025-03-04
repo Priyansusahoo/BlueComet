@@ -11,7 +11,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-
+/**
+ * @author Priyansu
+ */
 @Entity
 @Table(name = "events", indexes = {@Index(name = "idx_event_name", columnList = "name")})
 @Getter

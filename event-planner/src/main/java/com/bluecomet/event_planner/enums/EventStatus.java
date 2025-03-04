@@ -3,7 +3,9 @@ package com.bluecomet.event_planner.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.stream.Stream;
-
+/**
+ * @author Priyansu
+ */
 public enum EventStatus {
     UPCOMING("Upcoming"),
     ONGOING("Ongoing"),
