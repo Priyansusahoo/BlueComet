@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
+/**
+ * @author Priyansu
+ */
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByName(String name);

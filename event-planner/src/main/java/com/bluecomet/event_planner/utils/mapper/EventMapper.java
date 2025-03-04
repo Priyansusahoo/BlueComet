@@ -9,10 +9,19 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+/**
+ * @author Priyansu
+ */
 @Component
 public class EventMapper {
 
+    /**
+     * Converts an {@link Event} entity to an {@link EventResponse} DTO.
+     *
+     * @param event the Event entity
+     * @return the corresponding {@link EventResponse} DTO
+     * @throws EventNotFoundException if the event is null
+     */
     public EventResponse toResponse(Event event) {
         return Optional.ofNullable(event)
                 .map(e -> new EventResponse(
@@ -32,6 +41,12 @@ public class EventMapper {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Converts an {@link EventRequest} DTO to an {@link Event} entity.
+     *
+     * @param eventRequest the event request DTO
+     * @return the corresponding Event entity
+     */
     public Event toEntity(EventRequest eventRequest) {
         if (eventRequest == null) {
             return null;
@@ -47,6 +62,12 @@ public class EventMapper {
         return event;
     }
 
+    /**
+     * Updates an existing event {@link Event} entity with new details.
+     *
+     * @param event               the existing event entity
+     * @param updatedEventRequest the updated event request data
+     */
     public void updateEntity(Event event, EventRequest updatedEventRequest) {
         if (event == null || updatedEventRequest == null) {
             return;

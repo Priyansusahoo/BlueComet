@@ -3,8 +3,10 @@ package com.bluecomet.event_planner.controller;
 import com.bluecomet.event_planner.dto.event.EventRequest;
 import com.bluecomet.event_planner.dto.event.EventResponse;
 import com.bluecomet.event_planner.dto.request.EventDateRangeRequest;
+import com.bluecomet.event_planner.entity.Event;
 import com.bluecomet.event_planner.enums.EventStatus;
 import com.bluecomet.event_planner.service.EventService;
+import com.bluecomet.event_planner.utils.customexceptions.EventNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -24,6 +26,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * @author Priyansu
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/events")
@@ -33,6 +38,13 @@ public class EventController {
 
     private final EventService eventService;
 
+    /**
+     * Retrieves a paginated list of all events.
+     *
+     * @param page the page number (0-based index)
+     * @param size the number of events per page
+     * @return a paginated list of events or 204 No Content if no events exist
+     */
     @GetMapping
     @Operation(summary = "Get all events", description = "Retrieve a paginated list of all events")
     @ApiResponses({
@@ -49,6 +61,13 @@ public class EventController {
         return events.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(events);
     }
 
+    /**
+     * Retrieves an event by its unique identifier.
+     *
+     * @param id the unique ID of the event to retrieve
+     * @return the {@link Event} details, converted to {@link EventResponse} if found
+     * @throws EventNotFoundException if no event is found with the given ID
+     */
     @GetMapping("/{id}")
     @Operation(summary = "Get an event by ID", description = "Retrieve an event using its ID")
     @ApiResponses({
@@ -63,6 +82,12 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
+    /**
+     * Creates a new event {@link Event} with the provided details.
+     *
+     * @param eventRequest the request body containing event details
+     * @return the created event converted to {@link EventResponse} with a location header
+     */
     @PostMapping()
     @Operation(summary = "Create a new event", description = "Create a new event with the provided details")
     @ApiResponses({
@@ -83,6 +108,13 @@ public class EventController {
         return ResponseEntity.created(location).body(createdEvent);
     }
 
+    /**
+     * Updates an existing event {@link Event} using its ID.
+     *
+     * @param id           the ID of the event to update
+     * @param eventRequest the updated event details
+     * @return the updated event response {@link EventResponse}
+     */
     @PutMapping("/{id}")
     @Operation(summary = "Update an existing event", description = "Update an existing event using its ID")
     @ApiResponses({
@@ -98,6 +130,12 @@ public class EventController {
         return ResponseEntity.ok(eventService.updateEvent(id, eventRequest));
     }
 
+    /**
+     * Deletes an event {@link Event} using its ID.
+     *
+     * @param id the ID of the event to delete
+     * @return a response with no content if deletion is successful
+     */
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an event", description = "Delete an event using its ID")
     @ApiResponses({
@@ -112,6 +150,12 @@ public class EventController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Retrieves a list of events filtered by their status {@link EventStatus}.
+     *
+     * @param status the event status (e.g., UPCOMING, ONGOING, COMPLETED, CANCELLED)
+     * @return a list of events matching the given status
+     */
     @GetMapping("/status")
     @Operation(
             summary = "Get events by status",
@@ -134,6 +178,12 @@ public class EventController {
         return events.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(events);
     }
 
+    /**
+     * Cancels an event {@link Event} based on its ID.
+     *
+     * @param id the ID of the event to cancel
+     * @return the updated event response DTO {@link EventResponse}
+     */
     @PutMapping("/{id}/cancel")
     @Operation(
             summary = "Cancel an event",
@@ -152,6 +202,18 @@ public class EventController {
         return ResponseEntity.ok(cancelledEventResponse);
     }
 
+    /**
+     * Retrieves events that fall within the specified date range.
+     * <p>
+     * This API fetches events occurring between the provided start and end timestamps.
+     * If no events are found, it returns a 204 No Content response.
+     * </p>
+     *
+     * @param request the {@link EventDateRangeRequest} containing the start and end date range.
+     * @return {@link ResponseEntity} containing a list of {@link EventResponse} if events are found.
+     *         Returns 204 No Content if no events exist in the given range.
+     * @throws IllegalArgumentException if the start date is after the end date.
+     */
     @PostMapping("/between")
     @Operation(
             summary = "Get events within a date range",
