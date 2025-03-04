@@ -48,16 +48,11 @@ public class GlobalExceptionHandler {
      * @return A structured {@link ApiErrorResponse} with a 404 NOT FOUND status.
      */
     @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(EventNotFoundException ex, WebRequest request) {
+    public ResponseEntity<ApiErrorResponse> handleEventNotFoundException(EventNotFoundException ex, WebRequest request)
+    {
         log.warn("Event not found: {}", ex.getMessage());
 
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.NOT_FOUND.value())
-                .error(HttpStatus.NOT_FOUND.getReasonPhrase())
-                .message(ex.getMessage())
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request);
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
@@ -71,15 +66,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(EventAlreadyCancelledException.class)
     public ResponseEntity<ApiErrorResponse> handleEventAlreadyCancelledException(
-            EventAlreadyCancelledException ex, WebRequest request) {
-
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .message(ex.getMessage())
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+            EventAlreadyCancelledException ex, WebRequest request)
+    {
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -93,15 +82,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiErrorResponse> handleIllegalArgumentException(
-            IllegalArgumentException ex, WebRequest request) {
-
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .message(ex.getMessage())
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+            IllegalArgumentException ex, WebRequest request)
+    {
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -115,21 +98,15 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException ex, WebRequest request) {
-
+            MethodArgumentNotValidException ex, WebRequest request)
+    {
         String errorMessage = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .findFirst()
                 .orElse("Validation error");
 
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .message(errorMessage)
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, request);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -143,21 +120,15 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ApiErrorResponse> handleConstraintViolationException(
-            ConstraintViolationException ex, WebRequest request) {
-
+            ConstraintViolationException ex, WebRequest request)
+    {
         String errorMessage = ex.getConstraintViolations()
                 .stream()
                 .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
                 .findFirst()
                 .orElse("Constraint violation");
 
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.BAD_REQUEST.value())
-                .error(HttpStatus.BAD_REQUEST.getReasonPhrase())
-                .message(errorMessage)
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.BAD_REQUEST, errorMessage, request);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -170,17 +141,29 @@ public class GlobalExceptionHandler {
      * @return A structured {@link ApiErrorResponse} with a 500 INTERNAL SERVER ERROR status.
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGeneralException(Exception ex, WebRequest request) {
-        ApiErrorResponse response = ApiErrorResponse.builder()
-                .timestamp(LocalDateTime.now())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
-                .message("An unexpected error occurred: " + ex.getMessage())
-                .path(((ServletWebRequest) request).getRequest().getRequestURI())
-                .build();
+    public ResponseEntity<ApiErrorResponse> handleGeneralException(Exception ex, WebRequest request)
+    {
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                "An unexpected error occurred: " + ex.getMessage(), request);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
-
+    /**
+     * Utility method to build a standardized error response.
+     *
+     * @param status  The HTTP status.
+     * @param message The error message.
+     * @param request The web request where the error occurred.
+     * @return An instance of {@link ApiErrorResponse}.
+     */
+    private ApiErrorResponse buildErrorResponse(HttpStatus status, String message, WebRequest request) {
+        return ApiErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(status.getReasonPhrase())
+                .message(message)
+                .path(((ServletWebRequest) request).getRequest().getRequestURI())
+                .build();
+    }
 }
