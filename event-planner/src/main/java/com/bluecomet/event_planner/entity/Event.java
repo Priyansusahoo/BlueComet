@@ -12,6 +12,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 /**
+ * Entity representing an event in the system.
+ * <p>
+ * This class maps to the "events" table in the database and stores
+ * details about various events.
+ * </p>
+ *
+ * <p>
+ * The entity includes fields for event name, description, location,
+ * date, status, and timestamps for creation and updates.
+ * </p>
+ *
  * @author Priyansu
  */
 @Entity
@@ -55,6 +66,12 @@ public class Event {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
+    /**
+     * The version field used for optimistic locking.
+     * <p>
+     * Helps prevent concurrent update conflicts.
+     * </p>
+     */
     @Version
     private int version;
 }

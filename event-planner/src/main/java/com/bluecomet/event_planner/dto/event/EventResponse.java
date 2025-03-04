@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 /**
+ * DTO for responding with event details.
+ * <p>
+ * This class is used to send event data to clients after retrieval
+ * from the database.
+ * </p>
+ *
  * @author Priyansu
  */
 @Data

@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 /**
+ * DTO for creating or updating an event.
+ * <p>
+ * This class is used to capture event details from client requests,
+ * ensuring validation rules are applied before processing.
+ * </p>
+ *
  * @author Priyansu
  */
 @Data
