@@ -8,7 +8,6 @@ import com.bluecomet.event_planner.repository.EventRepository;
 import com.bluecomet.event_planner.utils.customexceptions.EventAlreadyCancelledException;
 import com.bluecomet.event_planner.utils.customexceptions.EventNotFoundException;
 import com.bluecomet.event_planner.utils.mapper.EventMapper;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

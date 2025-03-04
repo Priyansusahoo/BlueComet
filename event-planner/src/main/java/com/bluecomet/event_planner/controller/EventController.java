@@ -3,22 +3,17 @@ package com.bluecomet.event_planner.controller;
 import com.bluecomet.event_planner.dto.event.EventRequest;
 import com.bluecomet.event_planner.dto.event.EventResponse;
 import com.bluecomet.event_planner.dto.request.EventDateRangeRequest;
-import com.bluecomet.event_planner.entity.Event;
 import com.bluecomet.event_planner.enums.EventStatus;
 import com.bluecomet.event_planner.service.EventService;
-import com.bluecomet.event_planner.utils.customexceptions.EventAlreadyCancelledException;
-import com.bluecomet.event_planner.utils.customexceptions.EventNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j

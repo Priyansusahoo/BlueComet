@@ -2,8 +2,6 @@ package com.bluecomet.event_planner.repository;
 
 import com.bluecomet.event_planner.entity.Event;
 import com.bluecomet.event_planner.enums.EventStatus;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
