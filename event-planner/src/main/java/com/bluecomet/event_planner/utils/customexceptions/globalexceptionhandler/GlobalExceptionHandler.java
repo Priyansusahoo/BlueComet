@@ -3,6 +3,9 @@ package com.bluecomet.event_planner.utils.customexceptions.globalexceptionhandle
 import com.bluecomet.event_planner.utils.api.ApiErrorResponse;
 import com.bluecomet.event_planner.utils.customexceptions.EventAlreadyCancelledException;
 import com.bluecomet.event_planner.utils.customexceptions.EventNotFoundException;
+import com.bluecomet.event_planner.utils.customexceptions.event_registration.RegistrationAlreadyCancelledException;
+import com.bluecomet.event_planner.utils.customexceptions.event_registration.RegistrationAlreadyExistsException;
+import com.bluecomet.event_planner.utils.customexceptions.event_registration.RegistrationNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -147,6 +150,52 @@ public class GlobalExceptionHandler {
                 "An unexpected error occurred: " + ex.getMessage(), request);
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
+
+    /**
+     * Handles {@link RegistrationAlreadyExistsException} when a user tries to register for an event they are already registered for.
+     *
+     * @param ex      The exception instance.
+     * @param request The web request where the error occurred.
+     * @return A structured {@link ApiErrorResponse} with a 409 CONFLICT status.
+     */
+    @ExceptionHandler(RegistrationAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponse> handleRegistrationAlreadyExistsException(
+            RegistrationAlreadyExistsException ex, WebRequest request)
+    {
+        log.warn("Registration conflict: {}", ex.getMessage());
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.CONFLICT, ex.getMessage(), request);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    /**
+     * Handles {@link RegistrationNotFoundException} when a registration does not exist.
+     *
+     * @param ex      The exception instance.
+     * @param request The web request where the error occurred.
+     * @return A structured {@link ApiErrorResponse} with a 404 NOT_FOUND status.
+     */
+    @ExceptionHandler(RegistrationNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleRegistrationNotFoundException(
+            RegistrationNotFoundException ex, WebRequest request)
+    {
+        log.warn("Registration not found: {}", ex.getMessage());
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    /**
+     * Handles {@link RegistrationAlreadyCancelledException} when a cancelled registration is attempted to be cancelled again.
+     *
+     * @param ex      The exception instance.
+     * @param request The web request where the error occurred.
+     * @return A structured {@link ApiErrorResponse} with a 400 BAD_REQUEST status.
+     */
+    @ExceptionHandler(RegistrationAlreadyCancelledException.class)
+    public ResponseEntity<ApiErrorResponse> handleRegistrationAlreadyCancelledException(RegistrationAlreadyCancelledException ex, WebRequest request) {
+        log.warn("Registration already cancelled: {}", ex.getMessage());
+        ApiErrorResponse response = buildErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), request);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     /**
