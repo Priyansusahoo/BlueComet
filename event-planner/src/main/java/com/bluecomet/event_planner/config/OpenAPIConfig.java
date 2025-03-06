@@ -21,10 +21,10 @@ public class OpenAPIConfig {
                         .version("1.0.0")
                         .contact(new Contact()
                                 .name("Bluecomet Support")
-                                .email("priyansusahoo1@duck.com")
+                                .email("bluecomet.org@gmail.com")
                                 .url("https://github.com/Priyansusahoo/BlueComet/issues"))
                         .license(new License()
-                                .name("Apache 2.0")
-                                .url("https://www.apache.org/licenses/LICENSE-2.0")));
+                                .name("MIT")
+                                .url("https://opensource.org/licenses/MIT")));
     }
 }
