@@ -105,5 +105,5 @@ For full API details, refer to **Swagger UI**: `http://localhost:8080/swagger-ui
 
 ## 📧 Contact
 - For a new `Feature` or `bugs` create a issue in `Issue` tab
-- For queries, reach out at [priyansusahoo1@duck.com](mailto:priyansusahoo1@duck.com)
+- For queries, reach out at [bluecomet.org@gmail.com](mailto:bluecomet.org@gmail.com)
 
