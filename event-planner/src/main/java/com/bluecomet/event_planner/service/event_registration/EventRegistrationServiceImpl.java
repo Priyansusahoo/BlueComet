@@ -61,7 +61,7 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
             throw new EventNotFoundException("Event with ID " + eventId + " not found.");
         }
         List<EventRegistration> registrations = eventRegistrationRepository.findByEventId(eventId);
-        return registrations.stream()
+        return registrations.isEmpty() ? Collections.emptyList() : registrations.stream()
                 .map(eventRegistrationMapper::toResponse)
                 .collect(Collectors.toList());
     }
