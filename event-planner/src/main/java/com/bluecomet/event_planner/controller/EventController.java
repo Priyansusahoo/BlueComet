@@ -5,6 +5,7 @@ import com.bluecomet.event_planner.dto.event.EventResponse;
 import com.bluecomet.event_planner.dto.request.EventDateRangeRequest;
 import com.bluecomet.event_planner.entity.Event;
 import com.bluecomet.event_planner.enums.EventStatus;
+import com.bluecomet.event_planner.enums.RegistrationStatus;
 import com.bluecomet.event_planner.service.EventService;
 import com.bluecomet.event_planner.utils.customexceptions.EventNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -170,7 +171,11 @@ public class EventController {
             @ApiResponse(responseCode = "400", description = "Invalid event status")
     })
     public ResponseEntity<List<EventResponse>> getEventsByStatus(
-            @Parameter(description = "Event status to filter by", example = "UPCOMING") @RequestParam String status)
+            @Parameter(name = "status", description = "The new status of the Event",
+                    required = true, schema = @Schema(
+                    description = "Event status must be one of the allowed values",
+                    implementation = EventStatus.class))
+            @RequestParam String status)
     {
         log.info("API Call: GET /api/v1/events/status?status={} - Fetching events by status", status);
         EventStatus eventStatus = EventStatus.fromString(status);
