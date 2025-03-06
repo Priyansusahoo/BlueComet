@@ -1,11 +1,9 @@
 # Event Management System *(In Progress)*
 
-## Overview
+## 📌 Overview
 The **Event Management System** is a scalable, secure platform designed for organizations to manage event registrations efficiently. The system allows users to register for events, while admins can create, update, and cancel events. It follows industry best practices, leveraging modern technologies to ensure high performance and security.
 
-# Project SetUp
-
-## Features
+## 💡 Features
     ⏳ Secure authentication with Keycloak (OAuth 2.0, OpenID Connect) - 
     ✅ RESTful API design with industry-standard best practices
     ⏳ GraphQL support for optimized data fetching
@@ -15,7 +13,7 @@ The **Event Management System** is a scalable, secure platform designed for orga
     ✅ Scalable with MySQL as the database
     ⏳ Dockerized for easy deployment
 
-## Tech Stack - *Can change based on requirements*
+## 🛠️ Tech Stack - *Can change based on requirements*
 - **Backend:** Java, Spring (future roadmap)
 - **Database:** MySQL
 - **Security:** Keycloak (OAuth 2.0, JWT)
@@ -25,14 +23,14 @@ The **Event Management System** is a scalable, secure platform designed for orga
 - **Testing:** JUnit, Mockito
 - **Documentation:** Swagger, JavaDocs
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 - Java 17+
 - MySQL
 - Maven (for dependency management)
 
-### Installation & Setup
+### ⚙️ Setup & Installation
 1. `Clone` / `Fork` the repository:
 
 2. Set up environment variables (or use `application.properties`):
@@ -55,9 +53,9 @@ The **Event Management System** is a scalable, secure platform designed for orga
     spring.jpa.show-sql=true
    ```
 
-4. Run the application:
+4. ⚡ Run the application:
 
-## API Endpoints
+## 🌐 API Endpoints
 | Method | Endpoint | Description |
 |--------|---------|-------------|
 | `POST` | `/api/events` | Create a new event |
@@ -69,9 +67,10 @@ The **Event Management System** is a scalable, secure platform designed for orga
 
 And more...
 
+## 📖 API Documentation
 For full API details, refer to **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 
-## Project Structure ()
+## 📂 Project Structure
 ```
 📂 src
  ┣ 📂 main
@@ -90,21 +89,21 @@ For full API details, refer to **Swagger UI**: `http://localhost:8080/swagger-ui
  ┣ 📂 test  # Unit & Integration Tests
 ```
 
-## Roadmap
+## 🗺️ Roadmap
 - ⏳ **MVP: Basic Event System** (Current Phase)
 - 🔜 **Version 2: Payment Integration (Stripe, Razorpay)**
 - 🔜 **Version 3: Microservices Architecture & Event Analytics**
 - 🔜 **Version 4: AI-Powered Event Recommendations**
 
-## Contributing
+## 🤝 Contributing
 1. Fork the repo & create a feature branch
 2. Follow **Clean-Modular Code** & **SOLID principles**
 3. Submit a PR with detailed descriptions
 
-## License
+## 📜 License
 [MIT License](LICENSE)
 
-## Contact
+## 📧 Contact
 - For a new `Feature` or `bugs` create a issue in `Issue` tab
 - For queries, reach out at [priyansusahoo1@duck.com](mailto:priyansusahoo1@duck.com)
 
