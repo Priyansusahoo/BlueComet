@@ -20,7 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
+/**
+ * Service for handling event registration logic.
+ *
+ * @author Priyansu
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,6 +35,14 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
     private final EventRegistrationMapper eventRegistrationMapper;
     private final EventRepository eventRepository;
 
+    /**
+     * Registers a user for an event.
+     *
+     * @param request The registration request containing user ID and event ID {@link EventRegistrationRequest}.
+     * @return The event registration response object {@link EventRegistrationResponse}.
+     * @throws EventNotFoundException If the event ID does not exist.
+     * @throws RegistrationAlreadyExistsException If the user is already registered.
+     */
     @Override
     public EventRegistrationResponse registerUserForEvent(EventRegistrationRequest request) {
         // Check if event exists
@@ -54,6 +66,13 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
         return eventRegistrationMapper.toResponse(savedRegistration);
     }
 
+    /**
+     * Retrieves all registrations for a given event.
+     *
+     * @param eventId The ID of the event.
+     * @return A list of event registrations, or an empty list if none exist.
+     * @throws EventNotFoundException if the event does not exist.
+     */
     @Override
     public List<EventRegistrationResponse> getRegistrationsByEvent(Long eventId) {
         // Validate event existence before fetching registrations
@@ -66,6 +85,12 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a list of event registrations for a specific user.
+     *
+     * @param userId the ID of the user whose registrations are to be retrieved
+     * @return a list of {@link EventRegistrationResponse} objects
+     */
     @Override
     public List<EventRegistrationResponse> getRegistrationsByUser(Long userId) {
         List<EventRegistration> registrations = eventRegistrationRepository.findByUserId(userId);
@@ -75,6 +100,15 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
                 .toList();
     }
 
+    /**
+     * Cancels an existing registration if it is not already cancelled.
+     *
+     * @param userId  The ID of the user whose registration is to be canceled.
+     * @param eventId The ID of the event.
+     * @return The updated registration details.
+     * @throws RegistrationNotFoundException         if the registration does not exist.
+     * @throws RegistrationAlreadyCancelledException if the registration is already canceled.
+     */
     @Override
     public EventRegistrationResponse cancelRegistration(Long userId, Long eventId) {
         EventRegistration registration = eventRegistrationRepository.findByUserIdAndEventId(userId, eventId)
@@ -91,6 +125,14 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
         return eventRegistrationMapper.toResponse(updatedRegistration);
     }
 
+    /**
+     * Updates the status of an event registration.
+     * If the provided status is already set, no update is performed.
+     *
+     * @param registrationId The unique ID of the event registration to update.
+     * @param newStatus The new status to set for the registration.
+     * @throws RegistrationNotFoundException if no registration is found with the given ID.
+     */
     @Override
     public void updateRegistrationStatus(Long registrationId, RegistrationStatus newStatus) {
         EventRegistration registration = eventRegistrationRepository.findById(registrationId)
