@@ -5,6 +5,7 @@ import com.bluecomet.event_planner.dto.registration.EventRegistrationResponse;
 import com.bluecomet.event_planner.enums.RegistrationStatus;
 import com.bluecomet.event_planner.service.event_registration.EventRegistrationService;
 import com.bluecomet.event_planner.utils.api.ApiErrorResponse;
+import com.bluecomet.event_planner.utils.customexceptions.event_registration.RegistrationNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,7 +21,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/**
+ * Controller for handling event registration-related operations.
+ *
+ * @author Priyansu
+ */
 @RestController
 @RequestMapping("/api/v1/event-registration")
 @RequiredArgsConstructor
@@ -30,6 +35,12 @@ public class EventRegistrationController {
 
     private final EventRegistrationService eventRegistrationService;
 
+    /**
+     * Registers a user for an event.
+     *
+     * @param request The registration request containing user ID and event ID.
+     * @return ResponseEntity containing the event registration response.
+     */
     @Operation(
             summary = "Register user for event",
             description = "Register a user for an event by providing the user ID and event ID."
@@ -49,6 +60,13 @@ public class EventRegistrationController {
         return ResponseEntity.ok(eventRegistrationService.registerUserForEvent(request));
     }
 
+    /**
+     * Cancels a user's registration for a given event.
+     *
+     * @param userId  The ID of the user whose registration is to be canceled.
+     * @param eventId The ID of the event from which the user wants to unregister.
+     * @return A response indicating the cancellation status.
+     */
     @Operation(
             summary = "Cancel event registration",
             description = "Cancel a user's registration for an event by providing the user ID and event ID."
@@ -70,6 +88,12 @@ public class EventRegistrationController {
         return ResponseEntity.ok("Registration cancelled successfully.");
     }
 
+    /**
+     * Retrieves all event registrations for a given user.
+     *
+     * @param userId the ID of the user whose registrations are to be retrieved
+     * @return a ResponseEntity containing a list of event registrations {@link EventRegistrationResponse}
+     */
     @Operation(summary = "Get user registrations",
             description = "Retrieves all event registrations for a given user.")
     @ApiResponses({
@@ -85,6 +109,12 @@ public class EventRegistrationController {
         return ResponseEntity.ok(eventRegistrationService.getRegistrationsByUser(userId));
     }
 
+    /**
+     * Retrieves all user registrations for a given event.
+     *
+     * @param eventId The ID of the event.
+     * @return List of event registrations.
+     */
     @Operation(summary = "Get event registrations",
             description = "Retrieves all user registrations for a given event. Returns an empty list if no registrations exist.")
     @ApiResponses({
@@ -100,6 +130,16 @@ public class EventRegistrationController {
         return ResponseEntity.ok(eventRegistrationService.getRegistrationsByEvent(eventId));
     }
 
+    /**
+     * Updates the status of a specific event registration.
+     * If the status is already set to the provided value, no update occurs.
+     *
+     * @param registrationId The unique ID of the event registration to update.
+     * @param newStatus The new status to assign to the registration.
+     * @return ResponseEntity containing a success message.
+     * @throws RegistrationNotFoundException if the registration ID is not found.
+     * @throws IllegalArgumentException if an invalid registration status is provided.
+     */
     @Operation(summary = "Update registration status",
             description = "Updates the status of a specific event registration. If the status is already set, no update occurs.")
     @ApiResponses({

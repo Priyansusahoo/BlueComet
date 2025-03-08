@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-
+/**
+ * Entity representing an event registration.
+ *
+ * @author Priyansu
+ */
 @Entity
 @Table(name = "event_registrations")
 @Getter
@@ -23,6 +27,8 @@ public class EventRegistration {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
+    /** The user ID of the registrant.
+     * User ID will be generated from User services */
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
@@ -33,11 +39,13 @@ public class EventRegistration {
     @Column(name = "registered_at", nullable = false, updatable = false)
     private LocalDateTime registeredAt;
 
+    /** Auto-sets the registeredAt timestamp before persisting the entity. */
     @PrePersist
     protected void onRegister() {
         this.registeredAt = LocalDateTime.now();
     }
 
+    /** Optimistic locking version field. */
     @Version
     private int version;
 }
