@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250">
+  <!-- Dark space background with gradient -->
+  <defs>
+    <linearGradient id="spaceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050A30;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000814;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Comet tail gradient -->
+    <linearGradient id="cometGradient" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#4895EF;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#4361EE;stop-opacity:0.8" />
+      <stop offset="70%" style="stop-color:#3F37C9;stop-opacity:0.5" />
+      <stop offset="100%" style="stop-color:#3A0CA3;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="250" fill="url(#spaceGradient)" rx="20" ry="20" />
+  
+  <!-- Stars in background -->
+  <circle cx="50" cy="30" r="1.5" fill="white" />
+  <circle cx="100" cy="60" r="1" fill="white" />
+  <circle cx="150" cy="40" r="2" fill="white" />
+  <circle cx="300" cy="35" r="1.5" fill="white" />
+  <circle cx="330" cy="80" r="1" fill="white" />
+  <circle cx="370" cy="45" r="1.8" fill="white" />
+  <circle cx="80" cy="90" r="1.2" fill="white" />
+  <circle cx="200" cy="20" r="1.7" fill="white" />
+  <circle cx="250" cy="85" r="1.3" fill="white" />
+  <circle cx="40" cy="180" r="1.5" fill="white" />
+  <circle cx="220" cy="200" r="1.8" fill="white" />
+  <circle cx="320" cy="170" r="1.2" fill="white" />
+  <circle cx="380" cy="190" r="1" fill="white" />
+  <circle cx="150" cy="220" r="1.5" fill="white" />
+  
+  <!-- Comet tail -->
+  <path d="M300,90 C150,125 100,140 50,170" stroke="url(#cometGradient)" stroke-width="25" fill="none" stroke-linecap="round" />
+  
+  <!-- Comet head -->
+  <circle cx="320" cy="80" r="28" fill="#4CC9F0" />
+  <circle cx="320" cy="80" r="20" fill="#1A7FE4" />
+  
+  <!-- Logo text -->
+  <text x="200" y="170" font-family="Arial, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" fill="white">BlueComet</text>
+  
+  <!-- Small sparkles around comet -->
+  <circle cx="290" cy="70" r="2" fill="white" />
+  <circle cx="300" cy="65" r="1.5" fill="white" />
+  <circle cx="310" cy="60" r="1" fill="white" />
+  <circle cx="280" cy="85" r="1.8" fill="white" />
+  <circle cx="295" cy="90" r="1.2" fill="white" />
+</svg>

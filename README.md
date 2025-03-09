@@ -1,7 +1,13 @@
-# Event Management System *(In Progress)*
+<div style="text-align: center;">
+    <img src="images/blue-comet-logo.svg" alt="BlueComet Logo" style="width: 20%;" />
 
-## 📌 Overview
-The **Event Management System** is a scalable, secure platform designed for organizations to manage event registrations efficiently. The system allows users to register for events, while admins can create, update, and cancel events. It follows industry best practices, leveraging modern technologies to ensure high performance and security.
+
+<!-- ## Event Management System *(Development in Progress)* -->
+</div>
+
+## Overview
+
+The `BlueComet` is a scalable Event-Management-System, secure platform designed for organizations to manage event registrations efficiently. The system allows users to register for events, while admins can create, update, and cancel events. It follows industry best practices, leveraging modern technologies to ensure high performance and security.
 
 ## 💡 Features
     ⏳ Secure authentication with Keycloak (OAuth 2.0, OpenID Connect) - 
@@ -15,9 +21,9 @@ The **Event Management System** is a scalable, secure platform designed for orga
 
 ## 🛠️ Tech Stack - *Can change based on requirements*
 - **Backend:** Java, Spring (future roadmap)
-- **Database:** MySQL
-- **Security:** Keycloak (OAuth 2.0, JWT)
-- **Messaging:** Apache Kafka
+- **Database:** MySQL (will migrate to PostgreSQL)
+- **Security:** Spring Security
+- **Messaging:** Apache Kafka / RabbitMQ -> Not Decided
 - **API Design:** REST, GraphQL
 - **Deployment:** Docker, Kubernetes (future roadmap)
 - **Testing:** JUnit, Mockito
