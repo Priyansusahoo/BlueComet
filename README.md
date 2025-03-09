@@ -1,10 +1,8 @@
 <div style="text-align: center;">
     <img src="images/blue-comet-logo.svg" alt="BlueComet Logo" style="width: 20%;" />
-
-
-<!-- ## Event Management System *(Development in Progress)* -->
 </div>
 
+##### NOTE - *(Development in Progress)*
 ## Overview
 
 The `BlueComet` is a scalable Event-Management-System, secure platform designed for organizations to manage event registrations efficiently. The system allows users to register for events, while admins can create, update, and cancel events. It follows industry best practices, leveraging modern technologies to ensure high performance and security.
