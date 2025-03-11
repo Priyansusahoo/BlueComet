@@ -19,12 +19,12 @@ The `BlueComet` is a scalable Event-Management-System, secure platform designed 
 
 ## 🛠️ Tech Stack - *Can change based on requirements*
 - **Backend:** Java, Spring (future roadmap)
-- **Database:** MySQL (will migrate to PostgreSQL)
+- **Database:** PostgreSQL
 - **Security:** Spring Security
-- **Messaging:** Apache Kafka / RabbitMQ -> Not Decided
+- **Messaging:** Apache Kafka / RabbitMQ
 - **API Design:** REST, GraphQL
 - **Deployment:** Docker, Kubernetes (future roadmap)
-- **Testing:** JUnit, Mockito
+- **Testing:** JUnit, Mockito, RESTAssured, Cucumber
 - **Documentation:** Swagger, JavaDocs
 
 ## 🚀 Getting Started
