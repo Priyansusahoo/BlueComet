@@ -19,7 +19,7 @@ The `BlueComet` is a scalable Event-Management-System, secure platform designed 
 
 ## 🛠️ Tech Stack - *Can change based on requirements*
 - **Backend:** Java, Spring (future roadmap)
-- **Database:** PostgreSQL
+- **Database:** MySQL (current) -> PostgreSQL (will migrate)
 - **Security:** Spring Security
 - **Messaging:** Apache Kafka / RabbitMQ
 - **API Design:** REST, GraphQL
@@ -30,7 +30,7 @@ The `BlueComet` is a scalable Event-Management-System, secure platform designed 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Java 17+
+- Java 21
 - MySQL
 - Maven (for dependency management)
 
@@ -38,59 +38,86 @@ The `BlueComet` is a scalable Event-Management-System, secure platform designed 
 1. `Clone` / `Fork` the repository:
 
 2. Set up environment variables (or use `application.properties`):
-   ```sh
-    spring.application.name=event-planner
-
-
-    # ===============================
-    # = DATABASE CONFIGURATION =
-    # ===============================
-    spring.datasource.url=jdbc:mysql://127.0.0.1:3306/event_db?useSSL=false&serverTimezone=UTC
-    spring.datasource.username=your_username
-    spring.datasource.password=your_pasword
-    
-    # ===============================
-    # = JPA CONFIGURATION =
-    # ===============================
-    spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
-    spring.jpa.hibernate.ddl-auto=update
-    spring.jpa.show-sql=true
+   ```properties
+   # Spring Application Properties
+   spring.application.name = event-planner
+   
+   # Spring Datasource Properties
+   spring.datasource.url      = jdbc:mysql://127.0.0.1:3306/event_db?useSSL=false&serverTimezone=UTC
+   spring.datasource.username = root
+   spring.datasource.password = root
+   
+   # Spring JPA Properties
+   spring.jpa.database-platform  = org.hibernate.dialect.MySQLDialect
+   spring.jpa.hibernate.ddl-auto = update
+   spring.jpa.show-sql           = true
+   
+   # Server Properties
+   server.port                 = 8080
+   server.servlet.context-path = /api
    ```
 
 4. ⚡ Run the application:
 
-## 🌐 API Endpoints
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| `POST` | `/api/events` | Create a new event |
-| `GET`  | `/api/events/{id}` | Retrieve event details |
-| `PUT`  | `/api/events/{id}` | Update an event |
-| `DELETE` | `/api/events/{id}` | Cancel an event |
-| `POST` | `/api/registrations` | Register a user for an event |
-| `DELETE` | `/api/registrations/{userId}/{eventId}` | Cancel registration |
-
-And more...
 
 ## 📖 API Documentation
 For full API details, refer to **Swagger UI**: `http://localhost:8080/swagger-ui.html`
 
 ## 📂 Project Structure
 ```
-📂 src
- ┣ 📂 main
- ┃ ┣ 📂 java
- ┃ ┃ ┣ 📂 com.example.event
- ┃ ┃ ┃ ┣ 📂 config       # configuration classes
- ┃ ┃ ┃ ┣ 📂 controller   # API Controllers
- ┃ ┃ ┃ ┣ 📂 dto          # Data Transfer Objects
- ┃ ┃ ┃ ┣ 📂 entity       # Entities
- ┃ ┃ ┃ ┣ 📂 enums        # Enum
- ┃ ┃ ┃ ┣ 📂 repository   # Database Access Layer
- ┃ ┃ ┃ ┣ 📂 service      # Business Logic
- ┃ ┃ ┃ ┣ 📂 utils        # Utility classes
- ┃ ┣ 📂 resources
- ┃ ┃ ┣ 📜 application.properties  # Configurations
- ┣ 📂 test  # Unit & Integration Tests
+.
+├── java
+│   └── com
+│       └── bluecomet
+│           └── event_planner
+│               ├── advice
+│               │   └── GlobalExceptionHandler.java
+│               ├── config
+│               │   └── OpenAPIConfig.java
+│               ├── EventPlannerApplication.java
+│               ├── exception
+│               │   ├── EventAlreadyCancelledException.java
+│               │   ├── EventNotFoundException.java
+│               │   ├── RegistrationAlreadyCancelledException.java
+│               │   ├── RegistrationAlreadyExistsException.java
+│               │   └── RegistrationNotFoundException.java
+│               ├── mapper
+│               │   ├── EventMapper.java
+│               │   └── EventRegistrationMapper.java
+│               ├── model
+│               │   ├── entity
+│               │   │   ├── Event.java
+│               │   │   └── EventRegistration.java
+│               │   ├── exchange
+│               │   │   ├── ApiErrorResponse.java
+│               │   │   ├── EventRegistrationRequest.java
+│               │   │   ├── EventRegistrationResponse.java
+│               │   │   ├── EventRequest.java
+│               │   │   └── EventResponse.java
+│               │   └── vo
+│               │       ├── EventStatus.java
+│               │       └── RegistrationStatus.java
+│               ├── repository
+│               │   ├── EventRegistrationRepository.java
+│               │   └── EventRepository.java
+│               ├── resource
+│               │   ├── EventRegistrationResource.java
+│               │   └── EventResource.java
+│               ├── service
+│               │   ├── api
+│               │   │   └── EventRegistrationService.java
+│               │   └── impl
+│               │       ├── EventRegistrationServiceImpl.java
+│               │       └── EventService.java
+│               └── utils
+│                   └── DateTimeUtils.java
+└── resources
+    ├── application.properties
+    ├── schemas
+    │   ├── event_registration.sql
+    │   └── event.sql
+    ├── static
+    └── templates
 ```
 
 ## 🗺️ Roadmap
