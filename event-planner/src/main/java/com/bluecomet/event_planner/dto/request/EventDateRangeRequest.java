@@ -13,17 +13,7 @@ import java.time.LocalDateTime;
  * @author Priyansu
  */
 public record EventDateRangeRequest(
-        @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-        @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end
+
 ) {
-    /**
-     * Validates that the start date is before the end date.
-     *
-     * @throws IllegalArgumentException if the start date is after the end date.
-     */
-    public void validate() {
-        if (start.isAfter(end)) {
-            throw new IllegalArgumentException("Start date must be before end date.");
-        }
-    }
+
 }

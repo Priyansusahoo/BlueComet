@@ -1,7 +1,7 @@
 package com.bluecomet.event_planner.repository;
 
-import com.bluecomet.event_planner.entity.Event;
-import com.bluecomet.event_planner.enums.EventStatus;
+import com.bluecomet.event_planner.model.entity.Event;
+import com.bluecomet.event_planner.model.vo.EventStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
